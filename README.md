@@ -32,3 +32,31 @@ Before launching the campaign, we need evidence that:
 ## Selected Metric: Paid Conversion Rate
 
 Paid Conversion Rate is selected as the North Star metric because the main objective of the onboarding campaign is to increase the number of users who become paying customers. This metric directly represents business growth because more converted users lead to higher subscription revenue. Other metrics such as landing page visits, trial starts, and onboarding completion are supporting metrics because they represent steps in the customer journey but do not directly measure business value. However, optimizing only paid conversion rate can create problems if users convert but later cancel, request refunds, or create additional support load. Therefore, conversion improvement must be evaluated together with guardrail metrics.
+
+
+# TASK 4:
+
+## Experiment Analysis Approach
+
+### Data Quality Checks
+
+Missing values were checked across all dataset columns.
+
+The analysis found missing values in device_type (18 records), traffic_source (24 records), days_to_convert (1336 records), and engagement_score (14 records).
+
+No rows were removed because missing days_to_convert values represent users who did not convert and removing them could affect experiment results. Other missing values were retained to preserve the original experiment population.
+
+Duplicate user IDs were checked. 8 duplicate IDs were identified and will be reviewed before final analysis to avoid incorrect user counting.
+
+All binary fields were validated:
+- visited_landing_page
+- started_trial
+- completed_onboarding
+- converted_to_paid
+- refund_requested
+
+Only valid binary values (0 and 1) were found.
+
+Revenue values were checked for unusual values. Revenue ranged from 0 to 8610.72 with an average revenue of 52.83. No revenue records were removed because extreme values may represent genuine high-value customers.
+
+Segment distribution will be checked across region, device type, and traffic source to ensure fair comparison between Control and Treatment groups.
