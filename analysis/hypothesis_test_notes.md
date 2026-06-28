@@ -119,4 +119,5 @@ The new onboarding campaign improved the North Star Metric.
 Paid Conversion Rate increased from:
 - Control: 3.17%
 - Treatment: 6.99%
+  
 This indicates that the new onboarding experience successfully improves user conversion. However, the final launch decision should also consider guardrail metrics such as refund rate, support ticket rate, engagement score, days to convert, and revenue quality.
