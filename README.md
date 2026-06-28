@@ -41,10 +41,20 @@ To see how different metrics connect back to our North Star, I broke it down int
 
 Before doing any math or hypothesis testing, I checked the dataset inside analysis/experiment_analysis.xlsx for any data quality issues. Here is what I found and how I handled it:
 
-1. Missing Values: device_type (18 missing) and traffic_source (24 missing): I decided to keep these rows so I don't lose sample size. I just labeled the blanks as "Unknown".
+1. Missing Values: device_type (18 missing) and traffic_source (24 missing): I decided to keep these rows so I don't lose sample size. The missing values were retained because they were limited and removing these users could affect the experiment sample. Missing days_to_convert values were kept because they represent users who did not convert.
 - engagement_score (14 missing): Kept them as is since it's a very tiny number of rows.
 - days_to_convert (1,336 missing): These are blank because those users simply never converted to paid. Leaving them blank is correct; deleting them would ruin the conversion calculation.
-2. Duplicate User IDs: I ran a check and found 8 duplicate user IDs in the data. I have noted them down in the analysis notes to keep track of them.
+2. Duplicate User IDs: I ran a check and found 8 duplicate user IDs in the data. Duplicate user ID validation identified 8 duplicate user IDs. These were flagged for review to avoid incorrect user counting during KPI calculations.
 3. Binary Validation: Checked fields like completed_onboarding and converted_to_paid . They all correctly contain only 0 or 1.
 4. Revenue Outliers: The revenue goes from 0 up to a maximum of $8,610.72. Even though some numbers are very high, I didn't delete them because some users buy expensive premium or annual plans, which is normal for a business.
-5. Segment Check: The distribution looks balanced between Control and Treatment, meaning it's a fair test.
+5. Segment Check: Segment distribution was checked across region, device type, traffic source, and plan type. The Control and Treatment groups have similar distributions, reducing the chance of segment imbalance affecting experiment results.
+
+
+# Experiment Result Summary 
+
+The Treatment group improved the main user funnel metrics compared with the Control group.
+
+- Paid Conversion Rate increased from 3.17% in the Control group to 6.99% in the Treatment group, showing that the new onboarding campaign improved user conversion.
+- Average revenue per user showed a small increase from 51.75 in Control to 53.88 in Treatment.
+- However, guardrail metrics require attention. Support ticket rate increased from 14.72% to 24.76%, which may indicate increased user confusion or additional support needs.
+- Revenue per converted user decreased from 1630.10 in Control to 770.41 in Treatment. This suggests that although more users converted, the average value of each converted user decreased.
