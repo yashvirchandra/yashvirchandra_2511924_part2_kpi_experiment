@@ -1,145 +1,391 @@
-# Recommendation Memo
+# KPI Framework, Business Experiment Analysis & Decision Recommendation
 
-## Business Problem Summary
+## Business Context
 
-The company launched a new onboarding and activation campaign to improve user conversion and early engagement.
+The company is a subscription-based digital product company that launched a new onboarding and activation campaign.
 
-Users were divided into two groups:
+The goal of the campaign was to improve early user engagement and increase the number of users who become paying customers.
 
-**Control Group:** Existing onboarding experience
-**Treatment Group:** New campaign experience
+Users were divided into two experiment groups:
 
-Leadership needs to decide whether the new onboarding campaign should be launched for all users, kept for selected segments, or not launched.
+* **Control Group:** Existing onboarding experience
+* **Treatment Group:** New onboarding campaign experience
 
-The decision impacts future users who go through the onboarding process.
+Leadership needs to decide whether the new onboarding campaign should be launched for all users, launched only for selected segments, or not launched.
 
----
-
-## Objective
-
-The main objective is to determine whether the new onboarding campaign improves business performance compared to the existing onboarding experience.
-
-The primary success metric for this experiment is **Paid Conversion Rate** because converting users into paying customers directly contributes to subscription revenue and business growth.
+The decision impacts future users entering the onboarding process.
 
 ---
 
-## Experiment Result Summary
+# Business Problem Statement
 
-The experiment was performed using:
+The main business problem is to determine whether the new onboarding campaign creates a meaningful improvement in user conversion and engagement compared to the existing onboarding experience.
 
-Control Group: 693 users
-Treatment Group: 715 users
+The main metric expected to improve is **Paid Conversion Rate**, because converting users into paying customers directly contributes to subscription revenue and business growth.
 
-The Paid Conversion Rate results were:
+However, the decision should not be based only on conversion improvement.
 
-Control: 3.17%
-Treatment: 6.99%
+The company must monitor risks such as:
 
-The Treatment group showed a significant improvement in paid conversions compared to the Control group.
+* Increase in refund requests
+* Increase in customer support tickets
+* Lower customer quality
+* Longer conversion journey
+* Negative segment-level impact
 
-Other funnel metrics also improved:
-
-* Landing page visit rate increased from 63.64% to 72.59%
-* Trial start rate increased from 25.11% to 29.09%
-* Onboarding completion rate increased from 15.58% to 21.26%
-
-This indicates that the new onboarding experience improves user movement through the conversion funnel.
+The recommendation should be based on experiment results, statistical evidence, and guardrail metric evaluation.
 
 ---
 
-## Hypothesis Test Interpretation
+# Dataset Description
 
-A Chi-Square test was performed to compare Paid Conversion Rate between the two groups.
+The dataset contains user-level experiment data including:
 
-Null Hypothesis:
-The Treatment group does not improve paid conversion rate compared to Control.
+* User information
+* Experiment group assignment
+* User segments
+* Onboarding activity
+* Trial activity
+* Conversion status
+* Revenue information
+* Engagement score
+* Support and refund information
 
-Alternate Hypothesis:
-The Treatment group improves paid conversion rate compared to Control.
-
-Significance Level: 0.05
-
-P-value: 0.000383156
-
-Since the p-value is lower than 0.05, the null hypothesis was rejected.
-
-The result provides statistical evidence that the new onboarding campaign improves paid conversion.
+The dataset was analyzed to compare Control and Treatment performance.
 
 ---
 
-## Guardrail Analysis
+# North Star Metric Selected
 
-The recommendation was not based only on conversion improvement. Additional metrics were checked to identify possible risks.
+## Paid Conversion Rate
 
-### Refund Rate
+Paid Conversion Rate was selected as the North Star Metric.
 
-Control: 0%
-Treatment: 0.42%
+Formula:
 
-Refund rate increased slightly in Treatment but the impact is currently low.
+Converted Users / Total Users
 
-### Support Ticket Rate
+## Why this metric was selected
 
-Control: 14.72%
-Treatment: 24.76%
+A subscription business depends on converting users into paying customers.
 
-Support tickets increased in the Treatment group. This may indicate that some users are experiencing confusion or require additional help with the new onboarding flow.
+While metrics like landing page visits, trial starts, and onboarding completion show user movement through the funnel, they do not directly create revenue unless users become paying customers.
 
-### Days to Convert
+Paid Conversion Rate connects user behavior with business growth.
 
-Control: 8.86 days
-Treatment: 6.4 days
+## Risk of optimizing only this metric
 
-Treatment users converted faster, which is a positive signal.
+Optimizing conversion alone may create negative outcomes.
 
-### Revenue Quality
+For example, users may convert but later request refunds, require more support, or generate lower revenue value.
 
-Average revenue per converted user:
-
-Control: 1630.10
-Treatment: 770.41
-
-Although more users converted, revenue per converted user decreased. This means the company should monitor whether new conversions are generating similar customer value.
+Therefore, conversion improvement must be evaluated with supporting and guardrail metrics.
 
 ---
 
-## Segment-Level Insight
+# KPI Tree Summary
 
-Segment distribution was checked across:
+The KPI tree explains how the North Star Metric is influenced by different business drivers.
+
+## North Star Metric
+
+Paid Conversion Rate
+
+## Primary Drivers
+
+### 1. Funnel Progression
+
+Sub-drivers:
+
+* Landing page visits
+* Trial starts
+* Onboarding completion
+
+### 2. User Engagement
+
+Sub-drivers:
+
+* Engagement score
+* Product activity
+
+### 3. Revenue Quality
+
+Sub-drivers:
+
+* Paying customers
+* Revenue generated
+
+## Guardrail Metrics
+
+The following metrics were included to monitor risks:
+
+* Refund Rate
+* Support Ticket Rate
+* Days to Convert
+
+KPI Tree file:
+
+`outputs/kpi_tree.png`
+
+Preview:
+
+`screenshots/kpi_tree_preview.png`
+
+---
+
+# Experiment Analysis Approach
+
+The experiment analysis compared Control and Treatment groups.
+
+The following checks were performed before analysis:
+
+* Missing values
+* Experiment group distribution
+* Duplicate user IDs
+* Invalid binary values
+* Revenue outliers
+* Segment distribution across groups
+
+## Data Cleaning Observations
+
+### Missing Values
+
+Missing values were found in:
+
+* Device Type: 18
+* Traffic Source: 24
+* Days to Convert: 1336
+* Engagement Score: 14
+
+Missing records were retained to avoid reducing the experiment sample size.
+
+Missing days_to_convert values were treated as users who did not convert.
+
+### Group Distribution
+
+Control Group:
+
+693 users
+
+Treatment Group:
+
+715 users
+
+The experiment groups were balanced.
+
+### Duplicate User IDs
+
+8 duplicate user IDs were identified.
+
+They were flagged during validation to prevent incorrect user counting during analysis.
+
+### Binary Validation
+
+Binary fields checked:
+
+* visited_landing_page
+* started_trial
+* completed_onboarding
+* converted_to_paid
+* refund_requested
+
+All binary fields contained valid values (0 and 1).
+
+### Revenue Outlier Analysis
+
+Revenue was analyzed using the IQR method.
+
+Revenue range:
+
+Minimum Revenue: 0
+
+Maximum Revenue: 8610.72
+
+High revenue values were retained because they may represent genuine high-value customers.
+
+### Segment Distribution
+
+Segment balance was checked across:
 
 * Region
 * Device Type
 * Traffic Source
 * Plan Type
 
-The Control and Treatment groups had similar user distributions, which indicates that the experiment results are not heavily affected by segment imbalance.
+Control and Treatment groups had similar distributions.
 
 ---
 
-## Final Recommendation
+# Experiment Summary Results
 
-**Recommendation: Launch only for selected segments**
+The experiment comparison showed:
 
-The new onboarding campaign successfully improves the North Star Metric, Paid Conversion Rate, and users reach conversion faster.
+| Metric                     | Control | Treatment |
+| -------------------------- | ------: | --------: |
+| User Count                 |     693 |       715 |
+| Landing Page Visit Rate    |  63.64% |    72.59% |
+| Trial Start Rate           |  25.11% |    29.09% |
+| Onboarding Completion Rate |  15.58% |    21.26% |
+| Paid Conversion Rate       |   3.17% |     6.99% |
+| Average Revenue Per User   |   51.75 |     53.88 |
+| Refund Rate                |      0% |     0.42% |
+| Support Ticket Rate        |  14.72% |    24.76% |
+| Average Engagement Score   |   57.03 |     62.93 |
+| Average Days To Convert    |    8.86 |       6.4 |
 
-However, the increase in support ticket rate and decrease in revenue per converted user create risks that should be monitored.
+Detailed analysis:
 
-A controlled rollout is recommended instead of immediately launching for all users.
+`outputs/experiment_summary.xlsx`
 
 ---
 
-## Risks and Limitations
+# Hypothesis Test Summary
 
-* The experiment may not capture long-term customer retention impact.
-* Higher conversion does not always mean higher customer quality.
-* Increased support requirements may affect operational costs.
-* Revenue quality should be monitored after rollout.
+The hypothesis test evaluated whether the Treatment group improved Paid Conversion Rate.
+
+## Hypothesis
+
+Null Hypothesis:
+
+Treatment Paid Conversion Rate <= Control Paid Conversion Rate
+
+Alternate Hypothesis:
+
+Treatment Paid Conversion Rate > Control Paid Conversion Rate
+
+## Test Used
+
+Chi-Square Test of Independence
+
+The test was selected because the experiment compares two groups and a binary outcome:
+
+Converted vs Not Converted
+
+## Significance Level
+
+0.05
+
+## Result
+
+P-value:
+
+0.000383156
+
+Since:
+
+p-value < 0.05
+
+The null hypothesis was rejected.
+
+The Treatment group showed a statistically significant improvement in Paid Conversion Rate.
+
+Hypothesis notes:
+
+`analysis/hypothesis_test_notes.md`
 
 ---
 
-## Next Steps
+# Guardrail Metrics Considered
 
-1. Launch the campaign for selected user segments.
-2. Monitor conversion, refunds, support tickets, and revenue quality.
-3. Analyze long-term customer value after more data is collected.
-4. Expand rollout if results remain positive.
+The following guardrail metrics were evaluated:
+
+## Refund Rate
+
+Control:
+
+0%
+
+Treatment:
+
+0.42%
+
+Refund rate increased slightly but remains low.
+
+## Support Ticket Rate
+
+Control:
+
+14.72%
+
+Treatment:
+
+24.76%
+
+Support tickets increased, which may indicate user confusion or additional support requirements.
+
+## Days To Convert
+
+Control:
+
+8.86 days
+
+Treatment:
+
+6.4 days
+
+Users converted faster in the Treatment group.
+
+## Revenue Quality
+
+Average revenue per converted user:
+
+Control:
+
+1630.10
+
+Treatment:
+
+770.41
+
+Although conversion improved, revenue value per converted user decreased.
+
+---
+
+# Final Recommendation
+
+## Recommendation: Launch Only For Selected Segments
+
+The Treatment group significantly improved the North Star Metric.
+
+Paid Conversion Rate increased from:
+
+Control: 3.17%
+
+Treatment: 6.99%
+
+The campaign also improved engagement and reduced conversion time.
+
+However, increased support tickets and lower revenue per converted user create business risks.
+
+Therefore, a controlled rollout is recommended instead of launching to all users immediately.
+
+The company should monitor:
+
+* Conversion rate
+* Support tickets
+* Refund rate
+* Revenue quality
+
+before expanding the campaign.
+
+---
+
+# Assumptions and Limitations
+
+* Missing values were handled without removing users to preserve experiment size.
+* Missing conversion time values were treated as non-converted users.
+* Duplicate IDs were identified during validation.
+* The experiment measures early user behavior and may not represent long-term retention.
+* Revenue quality requires additional monitoring after rollout.
+
+---
+
+# Screenshots Included
+
+The repository contains:
+
+* summary_metrics.png
+* hypothesis_test_output.png
+* kpi_tree_preview.png
+
+All screenshots are stored inside the `screenshots/` folder.
