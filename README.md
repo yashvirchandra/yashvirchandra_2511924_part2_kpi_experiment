@@ -58,3 +58,36 @@ The Treatment group improved the main user funnel metrics compared with the Cont
 - Average revenue per user showed a small increase from 51.75 in Control to 53.88 in Treatment.
 - However, guardrail metrics require attention. Support ticket rate increased from 14.72% to 24.76%, which may indicate increased user confusion or additional support needs.
 - Revenue per converted user decreased from 1630.10 in Control to 770.41 in Treatment. This suggests that although more users converted, the average value of each converted user decreased.
+
+  
+## Guardrail Metrics Considered (Task 8)
+
+The experiment decision was not based only on conversion improvement. Guardrail metrics were evaluated to identify possible negative impacts.
+
+### 1. Refund Rate
+- Control: 0%
+- Treatment: 0.42%
+
+Observation: The Treatment group has a slightly higher refund rate, but the increase is small. This should continue to be monitored after launch.
+
+### 2. Support Ticket Rate
+- Control: 14.72%
+- Treatment: 24.76%
+
+Observation: Support ticket rate increased significantly in the Treatment group. This may indicate that some users experience confusion with the new onboarding process and require additional assistance.
+
+### 3. Average Days to Convert
+- Control: 8.86 days
+- Treatment: 6.40 days
+
+Observation: Treatment users convert faster than Control users. This is a positive signal because users reach the paid stage earlier.
+
+### 4. Revenue Quality
+
+Average Revenue per Converted User:
+- Control: 1630.10
+- Treatment: 770.41
+
+Observation: Although Treatment improves the number of conversions, revenue per converted user decreased. This indicates that the business should monitor customer quality and long-term revenue impact.
+
+Overall: The treatment improves conversion but introduces risks related to support load and revenue quality.
